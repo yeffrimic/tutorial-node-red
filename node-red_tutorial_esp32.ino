@@ -35,7 +35,7 @@ PubSubClient clienteMQTT(clienteWifi);//este utiliza el cliente anterior para ha
 
 const char * ssid = "Hackerspace";
 const char * claveWifi = "IOT12345";
-const char * brokerMqtt = "45.55.83.183";
+const char * brokerMqtt = "";
 uint32_t ultimoIntentoReconexion;
 uint32_t timerEnvioDatos;
 void conectarAlWifi() {
