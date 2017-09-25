@@ -33,7 +33,7 @@ PubSubClient clienteMQTT(clienteWifi);//este utiliza el cliente anterior para ha
 //si pasan por el hackerspace Xibalba pues ya tienen la clave
 const char * ssid = "Hackerspace";
 const char * claveWifi = "IOT12345";
-const char * brokerMqtt = "";// ip del broker sin http ni nada solo los numeros
+const char * brokerMqtt = "104.131.134.21";// ip del broker sin http ni nada solo los numeros
 uint32_t ultimoIntentoReconexion;
 uint32_t timerEnvioDatos;
 void conectarAlWifi() {
@@ -54,22 +54,24 @@ void conectarAlWifi() {
 
 void callback(char* topic, byte* mensaje, unsigned int length) {
   String topico = topic;
-  /*  String mensaje;
-    for(uint8_t i; i <length;i++){
-    mensaje+=char(payload[i]);
-    }*/
   Serial.print("Mensaje Recibido del topico: ");
   Serial.println(topico);
   Serial.print("mensaje : ");
-  Serial.println((char)mensaje[0]);
+  for(uint8_t i =0;i<length;i++){
+  Serial.print(mensaje[i]);
+  }
+  //le restamos -48 para que el valor sea 0 o 1 
+  //restamos el valor ascii para hacerlo un entero
+  
   if (topico == "/led1") {
-    digitalWrite(led1, mensaje[0]);
+    digitalWrite(led1, mensaje[0]-48);
   }
   else if (topico == "/led2") {
-    digitalWrite(led2, mensaje[0]);
+    digitalWrite(led2, mensaje[0]-48);
   }
   else if (topico == "/led3") {
-    digitalWrite(led3, mensaje[0]);
+    digitalWrite(led3, mensaje[0]-48);
+   Serial.println("led 3 ");
   }
   else {
     Serial.println("error de mensaje");
@@ -131,4 +133,3 @@ void loop() {
 
   }
 }
-
